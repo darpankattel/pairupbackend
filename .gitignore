@@ -1,0 +1,57 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Backup files
+*.bak
+
+# Virtual environments
+env/
+.env
+
+# Development-specific files
+.idea/
+.vscode/
+*.sage.py
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Dependency management
+*.egg-info/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Compiled JavaScript files
+*.js
+*.js.map
+
+# Node.js
+node_modules/
+
+# Compiled CSS files
+*.css.map
+
+
+# Compiled LESS files
+*.less
+
+# Compiled CoffeeScript files
+*.coffee
+
+# Docker
+.dockerignore
