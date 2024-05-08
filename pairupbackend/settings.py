@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,8 +25,9 @@ SECRET_KEY = 'django-insecure-k8s4dw0*m!%-&@hlc9c7y1qm9d6m#awnv_sh^$w))ypo93n3i1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEPLOYED = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,9 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps
+    'api.apps.ApiConfig',
+    'account.apps.AccountConfig',
+    'chat.apps.ChatConfig',
+    'project.apps.ProjectConfig',
+    'post.apps.PostConfig',
+    # others
+    'corsheaders',
+    'restframework',
+    'knox',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,8 +88,14 @@ WSGI_APPLICATION = 'pairupbackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pairup',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'http://127.0.0.1',
+        'PORT': '5432',
+        # atomic updates
+        'ATOMIC_REQUESTS': True
     }
 }
 
@@ -100,6 +119,22 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Rest framework authentication class
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('account.auth.CookieTokenAuthentication',),
+    'COERCE_DECIMAL_TO_STRING': False
+}
+REST_KNOX = {
+    'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': datetime.timedelta(days=7),
+    'USER_SERIALIZER': 'account.serializers.UserProfileSerializer',
+    'TOKEN_LIMIT_PER_USER': 50,
+    'AUTO_REFRESH': True,
+    'AUTH_HEADER_PREFIX': 'Bearer',
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -115,7 +150,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+if not DEPLOYED:
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    STATIC_ROOT = '/var/www/pairup/static/'
+    MEDIA_ROOT = '/var/www/pairup/media/'
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
+                        'http://127.0.0.1:3000',]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
