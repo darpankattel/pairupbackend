@@ -90,7 +90,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'pairup',
-        'USER': 'root',
+        'USER':'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
