@@ -14,11 +14,14 @@ RUN apt-get update && apt-get install -y \
 # Create and set the working directory inside the container
 WORKDIR /app
 
-# Copy your Django project files into the container
-COPY . /app/
+# copy the requirements.txt file into the container, for the caching to work effectively
+COPY requirements.txt /app/
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
+
+# Copy your Django project files into the container
+COPY . /app/
 
 # Expose port 8000 (the port your Django app will run on)
 EXPOSE 8000

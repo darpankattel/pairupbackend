@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     # others
     'corsheaders',
-    'restframework',
+    'rest_framework',
     'knox',
 ]
 
@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'pairup',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'http://127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
         # atomic updates
         'ATOMIC_REQUESTS': True

@@ -6,11 +6,17 @@ __pycache__
 db.sqlite3
 media
 
+# docs
+docs/
+
+
 # Backup files
 *.bak
 
 # Virtual environments
-env/
+venv/
+lenv/
+
 .env
 
 # Development-specific files
