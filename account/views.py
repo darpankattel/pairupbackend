@@ -5,7 +5,7 @@ from .serializers import UserProfileSerializer
 from core.response import MyResponse
 
 from knox.views import LoginView as KnoxLoginView, LogoutView as KnoxLogoutView, LogoutAllView as KnoxLogoutAllView
-from .auth import CookieTokenAuthentication as TokenAuthentication
+from authentication.core import CookieTokenAuthentication as TokenAuthentication
 from django.contrib.auth import login
 
 
