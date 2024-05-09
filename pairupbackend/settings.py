@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'project.apps.ProjectConfig',
     'post.apps.PostConfig',
+    'authentication.apps.AuthenticationConfig',
+    'userprofile.apps.UserprofileConfig',
     # others
     'corsheaders',
     'rest_framework',
@@ -92,9 +94,8 @@ DATABASES = {
         'NAME': 'pairup',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
-        # atomic updates
         'ATOMIC_REQUESTS': True
     }
 }
@@ -121,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Rest framework authentication class
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('account.auth.CookieTokenAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('authentication.core.CookieTokenAuthentication',),
     'COERCE_DECIMAL_TO_STRING': False
 }
 REST_KNOX = {

@@ -1,11 +1,14 @@
-version: '1'
+version: '3.8'
 services:
-  web:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+      - /venv
     environment:
       DJANGO_SETTINGS_MODULE: pairupbackend.settings
       POSTGRES_DB: pairup
@@ -15,7 +18,10 @@ services:
       - db
   db:
     image: postgres
+    restart: always
     environment:
       POSTGRES_DB: pairup
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
